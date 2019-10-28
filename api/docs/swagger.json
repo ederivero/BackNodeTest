@@ -1,0 +1,248 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Pequeño ejemplo de como funciona una api rest con NodeJs.",
+        "version": "1.0.0",
+        "title": "API Prueba",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "ederiveroman@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "probandobackconnode.herokuapp.com",
+    "basePath": "/api",
+    "tags": [
+        {
+            "name": "prueba",
+            "description": "todos los verbos acerca de solicitudes http",
+            "externalDocs": {
+                "description": "Consulta mas",
+                "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Methods"
+            }
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/prueba": {
+            "post": {
+                "tags": [
+                    "prueba"
+                ],
+                "summary": "Añadir un nuevo producto",
+                "description": "",
+                "operationId": "addProduct",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Objeto producto que va a ser agregado a la base de datos",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Producto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto agregado"
+                    },
+                    "400": {
+                        "description": "Error, intente nuevamente"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "prueba"
+                ],
+                "summary": "Traer todos los productos",
+                "description": "",
+                "operationId": "getProduct",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "todos los productos"
+                    },
+                    "400": {
+                        "description": "Error de conexion, intente nuevamente"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/prueba/:id": {
+            "put": {
+                "tags": [
+                    "prueba"
+                ],
+                "summary": "Actualiza algun producto segun su id",
+                "description": "",
+                "operationId": "modificarPrueba",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Objecto del producto que se desea actualizar",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Producto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto actualizado con exito"
+                    },
+                    "400": {
+                        "description": "Error al conectar con la base de datos"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "prueba"
+                ],
+                "summary": "Elimina producto segun su id",
+                "description": "",
+                "operationId": "eliminarProducto",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "integer",
+                        "description": "Id del producto a eliminar",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Pet not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "securityDefinitions": {
+        "petstore_auth": {
+            "type": "oauth2",
+            "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+            "flow": "implicit",
+            "scopes": {
+                "write:pets": "modify pets in your account",
+                "read:pets": "read your pets"
+            }
+        },
+        "api_key": {
+            "type": "apiKey",
+            "name": "api_key",
+            "in": "header"
+        }
+    },
+    "definitions": {
+        "Producto": {
+            "type": "object",
+            "required": [
+                "name",
+                "photoUrls"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "modelo": {
+                    "type": "string",
+                    "example": "XA222"
+                },
+                "catalogo_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "precio": {
+                    "type": "number",
+                    "example": 22.4
+                }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Encuentra mas de Express",
+        "url": "https://expressjs.com/"
+    }
+}
